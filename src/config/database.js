@@ -24,7 +24,7 @@ const connection = async () => {
   try {
     await mongoose.connect("mongodb://root:123456@localhost:27018/");
     const state = Number(mongoose.connection.readyState);
-    console.log(dbState.find((f) => f.value == state).label, "to db"); // connected to db
+    console.log(dbState.find((f) => f.value == state).label, "to DB"); // connected to db
   } catch (error) {
     console.log("error connection DB :>> ", error);
     handleError(error);

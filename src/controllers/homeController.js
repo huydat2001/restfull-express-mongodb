@@ -5,9 +5,9 @@ const {
   updateUserById,
   deleteUserById,
 } = require("../services/CRUDService");
-
+const User = require("../models/user");
 const getHomepage = async (req, res) => {
-  let results = [];
+  let results = await User.find({});
   return res.render("home.ejs", { listUsers: results }); // x <- y
 };
 
@@ -19,7 +19,7 @@ const getHoiDanIT = (req, res) => {
   // res.send('<h1>hoi dan it voi Eric </h1>')
   res.render("sample.ejs");
 };
-const User = require("../models/user");
+
 const postCreateUser = async (req, res) => {
   let email = req.body.email;
   let name = req.body.myname;

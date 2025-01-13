@@ -38,8 +38,8 @@ const getCreatePage = (req, res) => {
 
 const getUpdatePage = async (req, res) => {
   const userId = req.params.id;
-  let user = await getUserById(userId);
-  res.render("edit.ejs", { userEdit: user }); //x <- y
+  let user = await User.findById(userId).exec();
+  res.render("edit.ejs", { userEdit: user });
 };
 const postUpdateUser = async (req, res) => {
   let email = req.body.email;
@@ -47,15 +47,17 @@ const postUpdateUser = async (req, res) => {
   let city = req.body.city;
   let userId = req.body.userId;
 
-  await updateUserById(email, city, name, userId);
+  await User.updateOne(
+    { _id: userId },
+    { name: name, email: email, city: city }
+  );
 
-  // res.send(' Updated user succeed !')
   res.redirect("/");
 };
 
 const postDeleteUser = async (req, res) => {
   const userId = req.params.id;
-  let user = await getUserById(userId);
+  let user = await User.findById(userId);
 
   res.render("delete.ejs", { userEdit: user });
 };
@@ -63,7 +65,7 @@ const postDeleteUser = async (req, res) => {
 const postHandleRemoveUser = async (req, res) => {
   const id = req.body.userId;
 
-  await deleteUserById(id);
+  await User.deleteOne({ _id: id });
 
   res.redirect("/");
 };

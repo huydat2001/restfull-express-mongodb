@@ -2,7 +2,11 @@ const express = require("express");
 
 const routerAPI = express.Router();
 
-const { getUsersAPI, postUserAPI } = require("../controllers/apiController");
+const {
+  getUsersAPI,
+  postUserAPI,
+  updateUserAPI,
+} = require("../controllers/apiController");
 // router.Method('/route', handler)
 routerAPI.get("/", (req, res) => {
   res.send("heelo api");
@@ -10,5 +14,6 @@ routerAPI.get("/", (req, res) => {
 
 routerAPI.get("/users", getUsersAPI);
 routerAPI.post("/users", postUserAPI);
+routerAPI.put("/users", updateUserAPI);
 
 module.exports = routerAPI; //export default

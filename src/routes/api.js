@@ -10,6 +10,7 @@ const {
   postUploadSingleFileAPI,
   postUploadMultipleFileAPI,
 } = require("../controllers/apiController");
+const { postCreateCustomer } = require("../controllers/customerController");
 // router.Method('/route', handler)
 routerAPI.get("/", (req, res) => {
   res.send("heelo api");
@@ -21,5 +22,6 @@ routerAPI.put("/users", putUpdateUserAPI);
 routerAPI.delete("/users", deleteUserAPI);
 routerAPI.post("/file", postUploadSingleFileAPI);
 routerAPI.post("/files", postUploadMultipleFileAPI);
+routerAPI.post("/customers", postCreateCustomer);
 
 module.exports = routerAPI; //export default

@@ -11,15 +11,6 @@ const getHomepage = async (req, res) => {
   return res.render("home.ejs", { listUsers: results }); // x <- y
 };
 
-const getABC = (req, res) => {
-  res.send("check ABC");
-};
-
-const getHoiDanIT = (req, res) => {
-  // res.send('<h1>hoi dan it voi Eric </h1>')
-  res.render("sample.ejs");
-};
-
 const postCreateUser = async (req, res) => {
   let email = req.body.email;
   let name = req.body.myname;
@@ -71,8 +62,6 @@ const postHandleRemoveUser = async (req, res) => {
 };
 module.exports = {
   getHomepage,
-  getABC,
-  getHoiDanIT,
   postCreateUser,
   getCreatePage,
   getUpdatePage,

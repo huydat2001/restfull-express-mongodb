@@ -1,5 +1,9 @@
 const { uploadedSingleFile } = require("../services/fileService");
-const { createCustomer } = require("../services/customerService");
+const {
+  createCustomer,
+  createManyCustomer,
+} = require("../services/customerService");
+const { json } = require("express");
 module.exports = {
   postCreateCustomer: async (req, res) => {
     let { name, address, phone, email, description } = req.body;
@@ -23,5 +27,20 @@ module.exports = {
       EC: 0,
       data: customer,
     });
+  },
+  postCreateArrayCustomer: async (req, res) => {
+    let arr = req.body.customers;
+    let customer = await createManyCustomer(arr);
+    if (customer) {
+      return res.status(200).json({
+        EC: 0,
+        data: customer,
+      });
+    } else {
+      return res.status(200).json({
+        EC: -1,
+        data: customer,
+      });
+    }
   },
 };

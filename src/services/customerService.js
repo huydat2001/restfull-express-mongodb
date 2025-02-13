@@ -16,4 +16,13 @@ module.exports = {
       return null;
     }
   },
+  createManyCustomer: async (arr) => {
+    try {
+      let result = Customer.insertMany(arr);
+      return result;
+    } catch (error) {
+      console.log("error :>> ", error);
+      return null;
+    }
+  },
 };

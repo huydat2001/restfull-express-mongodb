@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
+//shape data
 const customerSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      require: true,
+      required: true,
     },
     address: String,
     phone: String,
@@ -11,8 +12,9 @@ const customerSchema = new mongoose.Schema(
     image: String,
     description: String,
   },
-  { timestamps: true }
+  { timestamps: true } // createdAt, updatedAt
 );
+
 const Customer = mongoose.model("Customer", customerSchema);
 
 module.exports = Customer;

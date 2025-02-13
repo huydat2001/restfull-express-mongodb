@@ -4,6 +4,7 @@ const {
   createManyCustomer,
   getAllCustomer,
   updateCustomer,
+  deleteCustomer,
 } = require("../services/customerService");
 module.exports = {
   postCreateCustomer: async (req, res) => {
@@ -70,6 +71,15 @@ module.exports = {
       image: imageUrl,
     };
     let result = await updateCustomer(customerData);
+    return res.status(200).json({
+      EC: 0,
+      data: result,
+    });
+  },
+  deleteCustomerAPI: async (req, res) => {
+    let id = req.body.id;
+
+    let result = await deleteCustomer(id);
     return res.status(200).json({
       EC: 0,
       data: result,

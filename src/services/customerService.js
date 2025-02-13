@@ -1,3 +1,4 @@
+const { model } = require("mongoose");
 const Customer = require("../models/customer");
 module.exports = {
   createCustomer: async (customerData) => {
@@ -58,6 +59,16 @@ module.exports = {
           image: customerData.image,
         }
       );
+      return result;
+    } catch (error) {
+      console.log("error :>> ", error);
+      return null;
+    }
+  },
+  deleteCustomer: async (id) => {
+    try {
+      console.log("id :>> ", id);
+      let result = await Customer.deleteById({ _id: id });
       return result;
     } catch (error) {
       console.log("error :>> ", error);

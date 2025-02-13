@@ -1,4 +1,3 @@
-const { get } = require("mongoose");
 const Customer = require("../models/customer");
 module.exports = {
   createCustomer: async (customerData) => {

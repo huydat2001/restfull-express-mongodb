@@ -67,8 +67,16 @@ module.exports = {
   },
   deleteCustomer: async (id) => {
     try {
-      console.log("id :>> ", id);
       let result = await Customer.deleteById({ _id: id });
+      return result;
+    } catch (error) {
+      console.log("error :>> ", error);
+      return null;
+    }
+  },
+  deleteManyCustomer: async (arr) => {
+    try {
+      let result = Customer.delete({ _id: { $in: arr } });
       return result;
     } catch (error) {
       console.log("error :>> ", error);

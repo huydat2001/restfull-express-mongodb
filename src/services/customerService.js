@@ -35,9 +35,24 @@ module.exports = {
       return null;
     }
   },
-  getAllCustomer: async () => {
+  getAllCustomer: async (limit, page, name) => {
     try {
-      let result = await Customer.find({});
+      let result = null;
+      if (limit && page) {
+        let offset = (page - 1) * limit;
+        if (name) {
+          result = await Customer.find({
+            name: { $regex: ".*" + name + ".*" },
+          })
+            .skip(offset)
+            .limit(limit)
+            .exec();
+        } else {
+          result = await Customer.find({}).skip(offset).limit(limit).exec();
+        }
+      } else {
+        result = await Customer.find({});
+      }
       return result;
     } catch (error) {
       console.log("error :>> ", error);

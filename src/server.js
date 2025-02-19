@@ -38,6 +38,10 @@ app.use("/v1/api/", apiRoutes);
     console.log("connect success");
     const db = client.db(dbName);
     const collection = db.collection("customers");
+    console.log(
+      "collection.find({}) :>> ",
+      await collection.findOne({ address: "hn" })
+    );
     app.listen(port, hostname, () => {
       console.log(`Example app listening on port ${port}`);
     });

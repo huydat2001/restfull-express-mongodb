@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
-const mongoose_delete = require(mongoose_delete);
+const mongoose_delete = require("mongoose-delete");
 const customerSchema = new mongoose.Schema({
   email: String,
   address: String,
+  phone: String,
 });
 const userSchema = new mongoose.Schema({
   name: String,
@@ -14,8 +15,8 @@ const projectSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    startDate: Date,
-    endDate: Date,
+    startDate: String,
+    endDate: String,
     description: String,
     customerInfor: customerSchema,
     usersInfor: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],

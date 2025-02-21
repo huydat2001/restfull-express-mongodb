@@ -18,6 +18,16 @@ const {
   deleteCustomerAPI,
   deleteManyCustomerAPI,
 } = require("../controllers/customerController");
+
+const {
+  getProjectsAPI,
+  postCreateProjectsAPI,
+  putUpdateProjectAPI,
+  deleteProjectAPI,
+  postCreateManyProjectsAPI,
+  deleteManyProjectAPI,
+} = require("../controllers/projectController");
+
 // router.Method('/route', handler)
 routerAPI.get("/", (req, res) => {
   res.send("heelo api");
@@ -37,6 +47,13 @@ routerAPI.get("/customers", getAllCustomerAPI);
 routerAPI.put("/customers", putUpdateCustomerAPI);
 routerAPI.delete("/customers", deleteCustomerAPI);
 routerAPI.delete("/customers-many", deleteManyCustomerAPI);
+
+routerAPI.get("/projects", getProjectsAPI);
+routerAPI.post("/projects", postCreateProjectsAPI);
+routerAPI.post("/projects-many", postCreateManyProjectsAPI);
+routerAPI.put("/projects", putUpdateProjectAPI);
+routerAPI.delete("/projects", deleteProjectAPI);
+routerAPI.delete("/projects-many", deleteManyProjectAPI);
 
 routerAPI.get("/info", (req, res) => {
   return res.status(200).json({

@@ -29,19 +29,19 @@ app.use("/v1/api/", apiRoutes);
 (async () => {
   try {
     // using mongoose
-    // await connection();
+    await connection();
     // using mongodb driver
-    const url = process.env.DB_HOST_WITH_DRIVER;
-    const client = new MongoClient(url);
-    const dbName = process.env.DB_NAME;
-    await client.connect();
-    console.log("connect success");
-    const db = client.db(dbName);
-    const collection = db.collection("customers");
-    console.log(
-      "collection.find({}) :>> ",
-      await collection.findOne({ address: "hn" })
-    );
+    // const url = process.env.DB_HOST_WITH_DRIVER;
+    // const client = new MongoClient(url);
+    // const dbName = process.env.DB_NAME;
+    // await client.connect();
+    // console.log("connect success");
+    // const db = client.db(dbName);
+    // const collection = db.collection("customers");
+    // console.log(
+    //   "collection.find({}) :>> ",
+    //   await collection.findOne({ address: "hn" })
+    // );
     app.listen(port, hostname, () => {
       console.log(`Example app listening on port ${port}`);
     });

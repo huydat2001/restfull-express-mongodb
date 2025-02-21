@@ -90,7 +90,6 @@ module.exports = {
   },
   deleteManyCustomerAPI: async (req, res) => {
     let arr = req.body.arr;
-    console.log("arr :>> ", arr);
     let result = await deleteManyCustomer(arr);
     if (result) {
       return res.status(200).json({

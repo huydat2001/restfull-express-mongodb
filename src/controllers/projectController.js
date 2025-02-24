@@ -8,10 +8,8 @@ const {
 } = require("../services/projectService");
 module.exports = {
   getProjectsAPI: async (req, res) => {
-    const { limit, page } = req.query;
     try {
-      let project = await getAllProject(limit, page, req.query);
-      console.log("project :>> ", project);
+      let project = await getAllProject(req.query);
       return res.status(200).json({
         EC: 0,
         data: project,
@@ -24,6 +22,7 @@ module.exports = {
   },
   postCreateProjectsAPI: async (req, res) => {
     const {
+      type,
       name,
       startDate,
       endDate,
@@ -46,6 +45,7 @@ module.exports = {
       email: leaderEmail,
     };
     const projectData = {
+      type,
       name,
       startDate,
       endDate,
@@ -53,8 +53,9 @@ module.exports = {
       customerInfor,
       leader,
     };
+
     try {
-      let project = await postCreateProjects(projectData);
+      let project = await postCreateProjects(req.body);
       return res.status(200).json({
         EC: 0,
         data: project,

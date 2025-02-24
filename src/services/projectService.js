@@ -2,15 +2,20 @@ const Project = require("../models/project");
 const aqp = require("api-query-params");
 
 module.exports = {
-  getAllProject: async (limit, page, queryString) => {
+  getAllProject: async (queryString) => {
     try {
       let result = null;
+      const { filter, limit, population } = aqp(queryString);
+
+      const page = queryString.page;
       if (limit && page) {
         let offset = (page - 1) * limit;
-        const { filter } = aqp(queryString);
         delete filter.page;
-        console.log("filter :>> ", filter);
-        result = await Project.find(filter).skip(offset).limit(limit).exec();
+        result = await Project.find(filter)
+          .populate(population)
+          .skip(offset)
+          .limit(limit)
+          .exec();
       } else {
         result = await Project.find({});
       }
@@ -22,24 +27,20 @@ module.exports = {
   },
   postCreateProjects: async (projectData) => {
     try {
-      if (projectData.type == "EMPTY-PROJECT") {
-        let result = await Project.create({
-          name: projectData.name,
-          startDate: projectData.startDate,
-          endDate: projectData.endDate,
-          description: projectData.description,
-          customerInfor: {
-            name: projectData.customerInfor?.name,
-            phone: projectData.customerInfor?.phone,
-            email: projectData.customerInfor?.email,
-          },
-          leader: {
-            name: projectData.leader?.name,
-            email: projectData.leader?.email,
-          },
-        });
+      if (projectData.type === "EMPTY-PROJECT") {
+        let result = await Project.create(projectData);
         return result;
       }
+      if (projectData.type === "ADD-USERS") {
+        let myProject = await Project.findById(projectData.projectId).exec();
+        for (let i = 0; i < projectData.usersArr.length; i++) {
+          myProject.usersInfor.push(projectData.usersArr[i]);
+        }
+
+        let newResult = await myProject.save();
+        return newResult;
+      }
+      return null;
     } catch (error) {
       console.log("error :>> ", error);
       return null;

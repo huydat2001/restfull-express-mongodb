@@ -40,6 +40,14 @@ module.exports = {
         let newResult = await myProject.save();
         return newResult;
       }
+      if (projectData.type === "REMOVE_USERS") {
+        let myProject = await Project.findById(projectData.projectId).exec();
+        for (let i = 0; i < projectData.usersArr.length; i++) {
+          myProject.usersInfor.pull(projectData.usersArr[i]);
+        }
+        let newResult = await myProject.save();
+        return newResult;
+      }
       return null;
     } catch (error) {
       console.log("error :>> ", error);
@@ -70,19 +78,7 @@ module.exports = {
       let result = await Project.updateOne(
         { _id: project },
         {
-          name: projectData.name,
-          startDate: projectData.startDate,
-          endDate: projectData.endDate,
-          description: projectData.description,
-          customerInfor: {
-            name: projectData.customerInfor?.name,
-            phone: projectData.customerInfor?.phone,
-            email: projectData.customerInfor?.email,
-          },
-          leader: {
-            name: projectData.leader?.name,
-            email: projectData.leader?.email,
-          },
+          ...projectData,
         }
       );
       return result;

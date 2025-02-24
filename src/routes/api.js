@@ -28,6 +28,13 @@ const {
   deleteManyProjectAPI,
 } = require("../controllers/projectController");
 
+const {
+  postCreateTask,
+  updateTask,
+  deleteTask,
+  getAllTask,
+} = require("../controllers/taskController");
+
 // router.Method('/route', handler)
 routerAPI.get("/", (req, res) => {
   res.send("heelo api");
@@ -55,6 +62,10 @@ routerAPI.put("/projects", putUpdateProjectAPI);
 routerAPI.delete("/projects", deleteProjectAPI);
 routerAPI.delete("/projects-many", deleteManyProjectAPI);
 
+routerAPI.get("/tasks", getAllTask);
+routerAPI.post("/tasks", postCreateTask);
+routerAPI.put("/tasks", updateTask);
+routerAPI.delete("/tasks", deleteTask);
 routerAPI.get("/info", (req, res) => {
   return res.status(200).json({
     data: req.query,

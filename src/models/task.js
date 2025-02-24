@@ -20,7 +20,7 @@ const taskSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    description: string,
+    description: String,
     usersInfo: userSchema,
     projectInfo: projectSchema,
     status: String,

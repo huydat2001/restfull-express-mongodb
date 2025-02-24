@@ -1,4 +1,5 @@
 const { uploadedSingleFile } = require("../services/fileService");
+const Joi = require("joi");
 const {
   createCustomer,
   createManyCustomer,
@@ -10,26 +11,45 @@ const {
 module.exports = {
   postCreateCustomer: async (req, res) => {
     let { name, address, phone, email, description } = req.body;
-    let imageUrl = "";
-    if (!req.files || Object.keys(req.files).length === 0) {
-      return res.status(400).send("No files were uploaded.");
-    } else {
-      let fileImage = await uploadedSingleFile(req.files.image);
-      imageUrl = fileImage.path;
-    }
-    let customerData = {
-      name,
-      address,
-      phone,
-      email,
-      description,
-      image: imageUrl,
-    };
-    let customer = await createCustomer(customerData);
-    return res.status(200).json({
-      EC: 0,
-      data: customer,
+    const schema = Joi.object({
+      name: Joi.string().alphanum().min(3).max(30).required(),
+
+      address: Joi.string(),
+
+      phone: Joi.string().pattern(new RegExp("^[0-9]{8,11}$")),
+
+      email: Joi.string().email(),
+
+      description: Joi.string(),
     });
+    const { error } = schema.validate(req.body, { abortEarly: false });
+    if (error) {
+      console.log("error :>> ", error);
+      return res.status(400).json({
+        msg: error,
+      });
+    } else {
+      let imageUrl = "";
+      if (!req.files || Object.keys(req.files).length === 0) {
+        return res.status(400).send("No files were uploaded.");
+      } else {
+        let fileImage = await uploadedSingleFile(req.files.image);
+        imageUrl = fileImage.path;
+      }
+      let customerData = {
+        name,
+        address,
+        phone,
+        email,
+        description,
+        image: imageUrl,
+      };
+      let customer = await createCustomer(customerData);
+      return res.status(200).json({
+        EC: 0,
+        data: customer,
+      });
+    }
   },
   postCreateArrayCustomer: async (req, res) => {
     let arr = req.body.customers;
